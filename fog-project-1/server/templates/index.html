@@ -49,7 +49,7 @@
                         row.appendChild(tempCell);
 
                         const fanStatusCell = document.createElement("td");
-                        fanStatusCell.textContent = details.fan_status || "Unknown";
+                        fanStatusCell.textContent = details.fan_state || "Unknown";
                         row.appendChild(fanStatusCell);
 
                         tbody.appendChild(row);

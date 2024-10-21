@@ -1,45 +1,31 @@
-import random
-import time
 import requests
+import time
+import random
 
-# Simulate temperature readings
-def get_temperature():
-    return round(random.uniform(15, 30), 2)
+# URL of the central server
+SERVER_URL = "http://localhost:5000"
 
-def control_fan(temperature):
-    if temperature > 25:
-        return "Fan ON"
-    elif temperature < 20:
-        return "Fan OFF"
-    else:
-        return "Fan OFF (Idle)"
-
-def send_data_to_flask(room, temperature, fan_status):
-    url = "http://localhost:5000/update"
-    data = {
-        "room": room,
-        "temperature": temperature,
-        "fan_status": fan_status
-    }
-    try:
-        response = requests.post(url, data=data)
-        if response.status_code == 200:
-            print(f"Data successfully sent to Flask for {room}")
-        else:
-            print(f"Failed to send data to Flask: {response.status_code}")
-    except requests.exceptions.RequestException as e:
-        print(f"Error sending data: {e}")
+# Function to simulate temperature and fan control in Room 1
+def simulate_room1():
+    while True:
+        # Simulate temperature between 20 and 40 degrees
+        temperature = random.randint(20, 40)
+        
+        # Determine fan state based on the temperature
+        fan_state = 'ON' if temperature > 30 else 'OFF'
+        
+        # Send the data to the central server
+        try:
+            response = requests.get(f"{SERVER_URL}/update_data/room2")
+            if response.status_code == 200:
+                print(f"Room 2 - Temperature: {temperature}, Fan: {fan_state}")
+            else:
+                print(f"Failed to update data for Room 2: {response.status_code}")
+        except Exception as e:
+            print(f"Error sending data for Room 2: {e}")
+        
+        # Wait for 5 seconds before sending the next update
+        time.sleep(5)
 
 if __name__ == "__main__":
-    room_name = "Bedroom"  # Change this for each fog node (e.g., "Bedroom")
-    
-    while True:
-        temperature = get_temperature()
-        fan_status = control_fan(temperature)
-        
-        print(f"Room: {room_name} | Temperature: {temperature}°C | {fan_status}")
-        
-        # Send data to Flask app
-        send_data_to_flask(room_name, temperature, fan_status)
-        
-        time.sleep(5)
+    simulate_room1()

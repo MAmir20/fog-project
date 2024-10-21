@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Node Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Monitoring Dashboard</h1>
+    <div id="temperature-chart"></div>
+    <div id="fan-chart"></div>
+
+    <script>
+        function updateCharts() {
+            fetch('/get_chart_data')
+                .then(response => response.json())
+                .then(data => {
+                    // Plot the temperature and fan charts
+                    Plotly.newPlot('temperature-chart', JSON.parse(data.temp_chart).data, JSON.parse(data.temp_chart).layout);
+                    Plotly.newPlot('fan-chart', JSON.parse(data.fan_chart).data, JSON.parse(data.fan_chart).layout);
+                });
+        }
+
+        // Fetch and update the charts every 2 seconds
+        setInterval(updateCharts, 2000);
+    </script>
+</body>
+</html>

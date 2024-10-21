@@ -15,7 +15,7 @@ def compute():
     partial_result = np.dot(matrix_A, matrix_B)
 
     # Log what this node is calculating (can also be saved to a file for local tracking)
-    log = f"Calculating: A (rows {matrix_A.shape[0]}) x B (size {matrix_B.shape})"
+    log = f"Calculating: A ( {matrix_A}) x B ( {matrix_B})"
 
     # Return the result and the log
     return jsonify({

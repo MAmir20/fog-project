@@ -5,11 +5,11 @@ import requests
 app = Flask(__name__)
 
 # Matrices to multiply
-matrix_A = np.random.randint(1, 10, size=(4, 4))  # Example 4x4 matrix
-matrix_B = np.random.randint(1, 10, size=(4, 4))  # Example 4x4 matrix
+matrix_A = np.random.randint(1, 10, size=(50, 50))  # Example 4x4 matrix
+matrix_B = np.random.randint(1, 10, size=(50, 50))  # Example 4x4 matrix
 
 # Result matrix (initialize with zeros)
-result_matrix = np.zeros((4, 4))
+result_matrix = np.zeros((50, 50))
 
 # List of fog node addresses (IPs or hostnames)
 fog_nodes = ['http://localhost:5001', 'http://localhost:5002']
